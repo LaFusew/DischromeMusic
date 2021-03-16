@@ -1,24 +1,26 @@
 import * as React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { RuntimeMessage } from "./content";
 
-const App = () => {
+const App:React.FC = () => {
+
+  const [importAvailable, setImportAvailable] = React.useState(false);
+
+  chrome.runtime.onMessage.addListener((message:RuntimeMessage) => {
+    if (message.youtubeVideo) {
+      setImportAvailable(true);
+    }
+  })
+  function handleImport() {
+    chrome.runtime.sendMessage({type: 'ADD'})
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => handleImport()}>
+        Add video
+      </button>
     </div>
   );
 };
