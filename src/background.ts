@@ -8,7 +8,7 @@ console.log("Hello from background script!");
 chrome.runtime.onMessage.addListener((message:RuntimeMessage, sender, sendResponce) => {
 
   if(message.type == 'ADD') {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       console.log(tabs[0]);  
   });
   }
